@@ -40,27 +40,26 @@ std::vector<int32_t> getVectorFromFile(const char * filename) {
     return ans;
 }
 
-
+//"../../test/in.txt"
 TEST(SortTapeTestSuite, SimpleSortTest) {
     std::vector<int32_t> vector = {1,3,24,42145,0,13,2,5,0,9,5,6,7,3};
-    writeVectorInFile("../../test/in.txt",vector);
-    Tape tape = Tape ("../../test/in.txt",100,vector.size());
+    writeVectorInFile("test/in.txt",vector);
+    Tape tape = Tape ("test/in.txt",100,vector.size());
     TapeSorter::Sort(tape);
     std::sort(vector.begin(),vector.end());
-    tape.Unload("../../test/out.txt");
-    std::vector<int32_t> ans = getVectorFromFile("../../test/out.txt");
+    tape.Unload("test/out.txt");
+    std::vector<int32_t> ans = getVectorFromFile("test/out.txt");
     ASSERT_EQ(vector,ans);
 }
 
 
 TEST(SortTapeTestSuite, CreateTape) {
     std::vector<int32_t> vector = {1,3,24,42141,0,13,2,5,0,9,5,6,7,3};
-    writeVectorInFile("../../test/in.txt",vector);
-    Tape tape = Tape ("../../test/in.txt",100,vector.size());
+    writeVectorInFile("test/in.txt",vector);
+    Tape tape = Tape ("test/in.txt",100,vector.size());
     int idx=1;
     ASSERT_EQ(vector[0],tape.Read());
     while (tape.MoveLeft()){
-        std::cout<<tape.Read()<<" "<<vector[idx]<<'\n';
         ASSERT_EQ(vector[idx],tape.Read());
         ++idx;
     }

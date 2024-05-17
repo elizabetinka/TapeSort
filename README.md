@@ -20,6 +20,10 @@ make
 ```bash
 ./TapeSort -i test/in.txt -o test/out.txt -M 100
 ```
+- Запуск тестов:
+```bash
+./tests/sortTests
+```
 
 # О параметрах
 - -i --input входной файл с числами (каждое на новой строке)(обязательно)
