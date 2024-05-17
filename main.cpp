@@ -3,8 +3,8 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 #include "parcing.h"
-#include "Tape.h"
-#include "TapeSorter.h"
+#include "lib/Tape.h"
+#include "lib/TapeSorter.h"
 #pragma comment( lib, "Pdh.lib" )
 using json = nlohmann::json;
 // command time -f '\nTime: %e s  Memory: %M KB'  -i test/in.txt -o test/out.txt -M 10
