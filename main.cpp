@@ -18,13 +18,17 @@ int main(int argc, char** argv) {
         std::cerr<<"M must be more than " << sizeof(data) + sizeof (getInfo)+ 48;
         return 1;
     }
-    std::cout << "M: "<< arguments.M << "need:  "<< sizeof(data) + sizeof (getInfo)+ 48 << std::endl;
     arguments.M -= sizeof(data) + sizeof (getInfo)+ 48;
 
-    Tape tape = Tape (arguments.inputFile,arguments.M,arguments.N);
-    tape.SetSettings(data["write_delay"],data["read_delay"],data["rewind"],data["move"]);
-    TapeSorter::Sort(tape);
-    tape.Unload(arguments.outputFile);
+    try {
+        Tape tape = Tape (arguments.inputFile,arguments.M,arguments.N);
+        tape.SetSettings(data["write_delay"],data["read_delay"],data["rewind"],data["move"]);
+        TapeSorter::Sort(tape);
+        tape.Unload(arguments.outputFile);
+    }
+    catch (const std::runtime_error& ex){
+        std::cerr<<ex.what();
+    }
 
     return 0;
 }

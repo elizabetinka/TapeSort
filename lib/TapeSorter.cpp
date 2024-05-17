@@ -18,6 +18,15 @@ void TapeSorter::WriteSortListFromFile(const char* file1,const char* file2,const
     std::ifstream fin1(file1, std::ios::out);
     std::ifstream fin2(file2, std::ios::out);
     std::ofstream fout(outfile, std::ios::out);
+    if (!fin1.is_open()){
+        throw std::runtime_error("can't open file");
+    }
+    if (!fin2.is_open()){
+        throw std::runtime_error("can't open file");
+    }
+    if (!fout.is_open()){
+        throw std::runtime_error("can't open file");
+    }
     int32_t ch1;
     int32_t ch2;
     fin1>>ch1;
@@ -80,6 +89,15 @@ void TapeSorter::WriteSortListFromFile(const char* file1,const char* file2,const
         }
         fout<<'\n';
     }
+    if (!flag){
+        if (ch1<=ch2){
+            fout<<ch1<<'\n'<<ch2;
+        }
+        else{
+            fout<<ch2<<'\n'<<ch1;
+        }
+
+    }
     fin1.close();
     fin2.close();
     fout.close();
@@ -110,13 +128,18 @@ void TapeSorter::Sort(ITape& tape) {
     std::filesystem::remove_all("tmp");
     std::filesystem::create_directories("tmp");
     std::ofstream fout("tmp/loop", std::ios::out);
-
+    if (!fout.is_open()){
+        throw std::runtime_error("can't open file");
+    }
     fout<<tape.Read();
     fout.close();
     hang(0,"tmp/loop");
 
     while (tape.MoveLeft()){
         fout.open("tmp/loop", std::ios::out);
+        if (!fout.is_open()){
+            throw std::runtime_error("can't open file");
+        }
         fout<<tape.Read();
         fout.close();
         hang(0,"tmp/loop");

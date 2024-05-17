@@ -21,6 +21,9 @@ Tape::Tape(const char * filename,uint64_t capacity,uint64_t N ) {
     _filename=filename;
     mass=new int32_t [_capacity];
     std::ifstream fin(_filename);
+    if (!fin.is_open()){
+        throw std::runtime_error("can't open file");
+    }
     int32_t ch = 0;
     pos=0;
     while (fin>>ch) {
@@ -32,12 +35,16 @@ Tape::Tape(const char * filename,uint64_t capacity,uint64_t N ) {
             break;
         }
     }
+    pos=0;
     fin.close();
 }
 
 void Tape::ChangeData(const char* filename) {
     _filename=filename;
     std::ifstream fin(_filename);
+    if (!fin.is_open()){
+        throw std::runtime_error("can't open file");
+    }
     int32_t ch = 0;
     pos=0;
     while (fin>>ch) {
@@ -54,6 +61,9 @@ void Tape::ChangeData(const char* filename) {
 
 bool Tape::Paging(){
     std::ifstream fin(_filename);
+    if (!fin.is_open()){
+        throw std::runtime_error("can't open file");
+    }
     fin.seekg(filePos, std::ios_base::beg);
     int32_t ch = 0;
     pos=0;

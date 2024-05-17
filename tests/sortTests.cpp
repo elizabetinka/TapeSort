@@ -18,12 +18,22 @@ void writeVectorInFile(const char * filename,const std::vector<int32_t>& vector 
 }
 
 
-TEST(SortTapeTestSuite, SimpleTest) {
+TEST(SortTapeTestSuite, SimpleSortTest) {
     std::vector<int32_t> vector = {1,3,24,42141,0,13,2,5,0,9,5,6,7,3};
     writeVectorInFile("test/in.txt",vector);
     Tape tape = Tape ("test/in.txt",100,vector.size());
     TapeSorter::Sort(tape);
     std::sort(vector.begin(),vector.end());
+    int idx=0;
+    while (tape.MoveLeft()){
+        ASSERT_EQ(vector[idx],tape.Read());
+    }
+}
+
+TEST(SortTapeTestSuite, CreateTape) {
+    std::vector<int32_t> vector = {1,3,24,42141,0,13,2,5,0,9,5,6,7,3};
+    writeVectorInFile("test/in.txt",vector);
+    Tape tape = Tape ("test/in.txt",100,vector.size());
     int idx=0;
     while (tape.MoveLeft()){
         ASSERT_EQ(vector[idx],tape.Read());
