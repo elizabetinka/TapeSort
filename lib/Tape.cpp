@@ -6,6 +6,11 @@
 #include <chrono>
 #include <thread>
 
+uint16_t  Tape::_write_delay;
+uint16_t  Tape::_read_delay;
+uint16_t  Tape::_rewind;
+uint16_t  Tape::_move;
+
 Tape::Tape(const char * filename,uint64_t capacity,uint64_t N ) {
     _capacity=capacity/ sizeof(value_type);
     _capacity=std::min(_capacity,N);
@@ -13,7 +18,6 @@ Tape::Tape(const char * filename,uint64_t capacity,uint64_t N ) {
         throw std::runtime_error("not enough capacity");
     }
     endIdx=_capacity;
-    std::cout<<" capacity: "<<_capacity<<'\n';
     _filename=filename;
     mass=new int32_t [_capacity];
     std::ifstream fin(_filename);
@@ -29,7 +33,6 @@ Tape::Tape(const char * filename,uint64_t capacity,uint64_t N ) {
         }
     }
     fin.close();
-
 }
 
 void Tape::ChangeData(const char* filename) {
@@ -49,46 +52,6 @@ void Tape::ChangeData(const char* filename) {
     fin.close();
 }
 
-/*
-Tape::Tape(const char * filename,uint64_t capacity,uint64_t N ) {
-    _capacity=capacity/ sizeof(value_type);
-    _capacity=std::min(_capacity,N);
-    std::cout<<" capacity: "<<_capacity;
-    _filename=filename;
-    mass=new int32_t [_capacity];
-    std::ifstream fin(_filename);
-    char s;
-    int32_t ch = 0;
-    bool written=false;
-    pos=0;
-    while (fin.get(s)) {
-        if (s == '\n') {
-            mass[pos]=ch;
-            written= true;
-            ++pos;
-            if (pos==_capacity){
-                pos=0;
-                filePos=fin.tellg();
-                break;
-            }
-            ch=0;
-            continue;
-        }
-        if (s > '9' || s < '0'){
-            throw std::runtime_error("cannot convert file to Tape");
-        }
-        ch = ch* 10 + s - '0';
-        written=false;
-    }
-    if (!written && pos < _capacity){
-        mass[pos]=ch;
-        pos=0;
-        filePos=fin.tellg();
-    }
-    fin.close();
-
-}
-*/
 bool Tape::Paging(){
     std::ifstream fin(_filename);
     fin.seekg(filePos, std::ios_base::beg);
@@ -140,7 +103,7 @@ void Tape::InBegin() {
     pos=0;
 }
 
-// ++
+// move tape to right mean get right elem
 bool Tape::MoveLeft() {
     std::this_thread::sleep_for(std::chrono::milliseconds(_move));
     uint64_t tmp=pos;
@@ -155,7 +118,7 @@ bool Tape::MoveLeft() {
     return true;
 }
 
-// --
+// move tape to right mean get left elem
 bool Tape::MoveRight(){
     std::this_thread::sleep_for(std::chrono::milliseconds(_move));
     if (pos == 0){

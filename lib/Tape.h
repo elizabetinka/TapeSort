@@ -73,16 +73,17 @@ public:
 
 
 private:
-    static uint16_t _write_delay;
-    static uint16_t _read_delay;
-    static uint16_t _rewind;
-    static uint16_t _move;
+    static uint16_t _write_delay; // 2 byte
+    static uint16_t _read_delay; // 2 byte
+    static uint16_t _rewind; // 2 byte
+    static uint16_t _move; // 2 byte
     const char* _filename;
-    value_type* mass;
-    uint64_t _capacity;
-    uint64_t filePos=0;
-    uint64_t pos=0;
-    uint64_t endIdx=0;
+    value_type* mass; // 8 byte
+    uint64_t _capacity; // 8 byte
+    uint64_t filePos=0; // 8 byte
+    uint64_t pos=0; // 8 byte
+    uint64_t endIdx=0; // 8 byte
+    // Summary: 48
 };
 
 
