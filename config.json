@@ -1,0 +1,6 @@
+{
+  "write_delay": 2,
+  "read_delay": 1,
+  "rewind": 3,
+  "move": 1
+}
