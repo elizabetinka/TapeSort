@@ -32,6 +32,7 @@ void TapeSorter::WriteSortListFromFile(const char* file1,const char* file2,const
     fin1>>ch1;
     fin2>>ch2;
     bool flag= false;
+    bool miss= false;
 
     while (!fin1.eof() && !fin2.eof()){
         flag=true;
@@ -39,7 +40,8 @@ void TapeSorter::WriteSortListFromFile(const char* file1,const char* file2,const
             fout<<ch1;
             fin1>>ch1;
             if (fin1.eof()){
-                fout<<'\n'<<ch1;
+                //fout<<'\n'<<ch1;
+                miss=true;
                 break;
             }
         }
@@ -47,7 +49,7 @@ void TapeSorter::WriteSortListFromFile(const char* file1,const char* file2,const
             fout<<ch2;
             fin2>>ch2;
             if (fin2.eof()){
-                fout<<'\n'<<ch2;
+                miss=true;
                 break;
             }
         }
@@ -60,31 +62,49 @@ void TapeSorter::WriteSortListFromFile(const char* file1,const char* file2,const
     }
 
     while (!fin1.eof()){
-        if (!flag){
+        if ( miss){
             if (ch2<=ch1){
-                flag=true;
+                miss=false;
                 fout<<ch2<<'\n';
             }
         }
         fout<<ch1;
         fin1>>ch1;
         if (fin1.eof()){
+            if ( miss){
+                if (ch2<=ch1){
+                    miss=false;
+                    fout<<ch2<<'\n';
+                }
+            }
             fout<<'\n'<<ch1;
+            if (miss){
+                fout<<'\n'<<ch2;
+            }
             break;
         }
         fout<<'\n';
     }
     while (!fin2.eof()){
-        if (!flag){
+        if (miss){
             if (ch1<=ch2){
-                flag=true;
+                miss=false;
                 fout<<ch1<<'\n';
             }
         }
         fout<<ch2;
         fin2>>ch2;
         if (fin2.eof()){
+            if (miss){
+                if (ch1<=ch2){
+                    miss=false;
+                    fout<<ch1<<'\n';
+                }
+            }
             fout<<'\n'<<ch2;
+            if (miss){
+                fout<<'\n'<<ch1;
+            }
             break;
         }
         fout<<'\n';
@@ -98,6 +118,7 @@ void TapeSorter::WriteSortListFromFile(const char* file1,const char* file2,const
         }
 
     }
+
     fin1.close();
     fin2.close();
     fout.close();

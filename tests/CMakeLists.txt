@@ -24,6 +24,9 @@ target_link_libraries(
 )
 
 target_include_directories(sortTests PUBLIC ${PROJECT_SOURCE_DIR})
+target_include_directories(sortTests PUBLIC ../test)
+target_include_directories(sortTests PUBLIC ../lib)
+target_include_directories(sortTests PUBLIC ../tmp)
 
 include(GoogleTest)
 

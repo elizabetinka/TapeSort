@@ -11,7 +11,7 @@ using json = nlohmann::json;
 int main(int argc, char** argv) {
     getInfo arguments;
     Parsing(argc, argv, arguments);
-    std::ifstream f("config.json");
+    std::ifstream f("../config.json");
     json data = json::parse(f);
     //                                                    variables in Tape
     if (arguments.M <= (sizeof (data) + sizeof (getInfo) + 48)){
