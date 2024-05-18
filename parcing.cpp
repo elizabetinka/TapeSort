@@ -8,7 +8,7 @@
 
 
 // lines = count "\n" + 1
-uint32_t lines(const char *path) {
+uint32_t lines(const char* path) {
     std::ifstream fin(path);
 
     char s;
@@ -29,22 +29,20 @@ void Parsing(int argc, char** argv, getInfo& arguments) {
         if (strcmp(argv[i], "-M") == 0 or strcmp(argv[i], "--ram") == 0) {
             i++;
             arguments.M = static_cast<uint64_t>(atoi(argv[i]));
-        }
-        else if (strcmp(argv[i], "-i") == 0 or strcmp(argv[i], "--input") == 0) {
+        } else if (strcmp(argv[i], "-i") == 0 or strcmp(argv[i], "--input") == 0) {
             i++;
             arguments.inputFile = argv[i];
-            boolIn=true;
+            boolIn = true;
         } else if (strcmp(argv[i], "-o") == 0 or strcmp(argv[i], "--output") == 0) {
             i++;
             arguments.outputFile = argv[i];
-           boolOut = true;
-        }
-        else {
+            boolOut = true;
+        } else {
             std::cerr << "unknown option" << std::endl;
         }
     }
     // check urequired parameters
-    if (!boolIn|| !boolOut) {
+    if (!boolIn || !boolOut) {
         std::cerr << "urequired parameters were not entered" << std::endl;
         exit(1);
     }

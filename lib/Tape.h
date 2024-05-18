@@ -3,6 +3,7 @@
 //
 
 #pragma once
+
 #include <iostream>
 #include <fstream>
 #include <filesystem>
@@ -12,20 +13,20 @@
 class ITape {
 public:
 
-    ITape()=default;
+    ITape() = default;
 
     virtual int32_t Read() const = 0;
 
     virtual void ChangeData(const char* filename) = 0;
 
 
-    virtual void SetSettings(uint16_t write_delay,uint16_t read_delay,uint16_t rewind,uint16_t move) = 0;
+    virtual void SetSettings(uint16_t write_delay, uint16_t read_delay, uint16_t rewind, uint16_t move) = 0;
 
     virtual void Write(int32_t value) = 0;
 
-    virtual bool MoveRight()  = 0;
+    virtual bool MoveRight() = 0;
 
-    virtual bool MoveLeft()  = 0;
+    virtual bool MoveLeft() = 0;
 
     virtual void InBegin() = 0;
 
@@ -37,28 +38,28 @@ class Tape : public ITape {
 public:
     Tape();
 
-    Tape(const char * filename,uint64_t capacity ,uint64_t N );
+    Tape(const char* filename, uint64_t capacity, uint64_t N);
 
 
     void ChangeData(const char* filename);
 
-    void SetSettings(uint16_t write_delay,uint16_t read_delay,uint16_t rewind,uint16_t move);
+    void SetSettings(uint16_t write_delay, uint16_t read_delay, uint16_t rewind, uint16_t move);
 
     void Write(value_type value);
 
-    bool MoveRight() ;
+    bool MoveRight();
 
     bool MoveLeft();
 
-    void InBegin() ;
+    void InBegin();
 
-    void Unload(const char * filename);
+    void Unload(const char* filename);
 
     bool Paging();
 
-    void Print(){
-        for (uint64_t i=0; i< endIdx; ++i) {
-            std::cout<<mass[i]<<" ";
+    void Print() {
+        for (uint64_t i = 0; i < endIdx; ++i) {
+            std::cout << mass[i] << " ";
         }
     }
 
@@ -66,8 +67,8 @@ public:
 
 
     ~Tape() noexcept {
-        if (mass != nullptr){
-            delete [] mass;
+        if (mass != nullptr) {
+            delete[] mass;
         }
     }
 
@@ -80,9 +81,9 @@ private:
     const char* _filename;
     value_type* mass; // 8 byte
     uint64_t _capacity; // 8 byte
-    uint64_t filePos=0; // 8 byte
-    uint64_t pos=0; // 8 byte
-    uint64_t endIdx=0; // 8 byte
+    uint64_t filePos = 0; // 8 byte
+    uint64_t pos = 0; // 8 byte
+    uint64_t endIdx = 0; // 8 byte
     // Summary: 48
 };
 
